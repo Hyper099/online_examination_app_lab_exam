@@ -1,0 +1,26 @@
+name: agile-lab-exam
+
+services:
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      SECRET_KEY: ${SECRET_KEY:-}
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  mongo:
+    image: mongo:8.0
+    volumes:
+      - exam_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "quit(db.adminCommand({ ping: 1 }).ok ? 0 : 1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  exam_data:

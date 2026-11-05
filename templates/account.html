@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h1>{{ title }}</h1>
+<form method="post">
+    <input type="hidden" name="csrf_token" value="{{ session['csrf_token'] }}">
+    <p><label>Username <input name="username" autocomplete="username" maxlength="40" required></label></p>
+    <p><label>Password
+        <input type="password" name="password" maxlength="128" required
+               {% if title == 'Register' %}minlength="8" autocomplete="new-password"
+               {% else %}autocomplete="current-password"{% endif %}>
+    </label></p>
+    <button type="submit">{{ title }}</button>
+</form>
+{% if title == 'Register' %}
+    <p>Already registered? <a href="{{ url_for('login') }}">Log in</a></p>
+{% else %}
+    <p>New here? <a href="{{ url_for('register') }}">Register</a></p>
+{% endif %}
+{% endblock %}

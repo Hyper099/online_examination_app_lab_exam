@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Python Basics{% endblock %}
+{% block content %}
+<h1>Python Basics</h1>
+<p>Choose one answer for each of the {{ questions | length }} questions. Each correct answer earns one mark.</p>
+<form method="post">
+    <input type="hidden" name="csrf_token" value="{{ session['csrf_token'] }}">
+    {% for prompt, options in questions %}
+        {% set number = loop.index %}
+        <fieldset>
+            <legend>{{ number }}. {{ prompt }}</legend>
+            {% for option in options %}
+                <label><input type="radio" name="q{{ number }}" value="{{ loop.index0 }}" required> {{ option }}</label><br>
+            {% endfor %}
+        </fieldset>
+    {% endfor %}
+    <p><button type="submit">Submit exam</button></p>
+</form>
+{% endblock %}

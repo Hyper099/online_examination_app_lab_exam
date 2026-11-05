@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %} | Online Exam</title>
+</head>
+<body>
+    <header>
+        <strong>Online Exam</strong>
+        {% if session.get('username') %}
+            <nav aria-label="Account">
+                <a href="{{ url_for('exam') }}">Exam</a>
+                <a href="{{ url_for('results') }}">Results</a>
+                <form method="post" action="{{ url_for('logout') }}" style="display:inline">
+                    <input type="hidden" name="csrf_token" value="{{ session['csrf_token'] }}">
+                    <button type="submit">Log out</button>
+                </form>
+            </nav>
+        {% endif %}
+    </header>
+    <main>
+        {% if error %}<p role="alert">{{ error }}</p>{% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
