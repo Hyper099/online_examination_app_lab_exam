@@ -1,3 +1,5 @@
+## Adding this comment as the modification to the result_calculation.py
+
 def calculate_score(answers, answer_key):
     """Count correct answers. Each answer is a zero-based option index."""
     if not isinstance(answers, (list, tuple)) or not isinstance(answer_key, (list, tuple)):
